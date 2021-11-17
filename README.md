@@ -1,1 +1,38 @@
 # Julia practice
+
+- Indices start at 1.
+- Function names ending with an exclamation point (`!`) modify their arguments.
+    - Functions that write to their arguments have names that end in !. These are sometimes called "mutating" or "in-place" functions because they are intended to produce changes in their arguments after the function is called, not just return a value.
+- Dot syntax
+    - [Dot syntax for vectorizing functions](https://docs.julialang.org/en/v1/manual/functions/#man-vectorized)
+    - [Vectorized "dot" operators](https://docs.julialang.org/en/v1/manual/mathematical-operations/#man-dot-operators)
+- The list of reserved keywords in Julia: `baremodule`, `begin`, `break`, `catch`, `const`, `continue`, `do`, `else`, `elseif`, `end`, `export`, `false`, `finally`, `for`, `function`, `global`, `if`, `import`, `let`, `local`, `macro`, `module`, `quote`, `return`, `struct`, `true`, `try`, `using`, `while`
+- The following two-word sequences are reserved: `abstract type`, `mutable struct`, `primitive type`. However, you can create variables with names: `abstract`, `mutable`, `primitive` and `type`.
+- `import Foo` will load the module or package `Foo`. Names from the imported `Foo` module can be accessed with dot syntax (e.g. `Foo.foo` to access the name `foo`).
+- `using Foo` will load the module or package `Foo` and make its exported names available for direct use (e.g. `foo` to access the name `Foo.foo`). Names can also be used via dot syntax (e.g. `Foo.foo` to access the name `foo`).
+- When `using ModuleName:` or `import ModuleName:` is followed by a comma-separated list of names, the module is loaded, but only those specific names are brought into the namespace by the statement. For example, `using NiceStuff: nice, DOG` will only import the names `nice` and `DOG`.
+- `include(path::AbstractString)` evaluates the contents of the input source file in the global scope. `include` behaves as if the contents of the source file were evaluated in its place.
+- There are three important standard modules:
+    - `Core` contains all functionality "built into" the language.
+    - `Base` contains basic functionality that is useful in almost all cases.
+    - `Main` is the top-level module and the current module, when Julia is started.
+- [Operators](https://docs.julialang.org/en/v1/devdocs/ast/#Operators)
+- [Punctuation](https://docs.julialang.org/en/v1/base/punctuation/#Punctuation)
+    - `;`: Semicolons (1) separate statements, (2) begin a list of keyword arguments in function declarations or calls, or (3) are used to separate array literals for vertical concatenation.
+    - `@m`	the at-symbol invokes `macro m`; followed by space-separated expressions or a function-call-like argument list
+    - `a!`	function names that end with an exclamation mark modify one or more of their arguments by convention
+- [`println`](https://docs.julialang.org/en/v1/base/io-network/#Base.println)
+- [`typeof `](https://docs.julialang.org/en/v1/base/base/#Core.typeof)
+- [`findall(A)`](https://docs.julialang.org/en/v1/base/arrays/#Base.findall-Tuple{Any}): Return a vector `I` of the true indices or keys of `A`. If there are no such elements of `A`, return an empty array.
+- [`macro`](https://docs.julialang.org/en/v1/base/base/#macro)
+    - `macro` defines a method for inserting generated code into a program. A macro maps a sequence of argument expressions to a returned expression, and the resulting expression is substituted directly into the program at the point where the macro is invoked. Macros are a way to run generated code without calling `eval`, since the generated code instead simply becomes part of the surrounding program.
+- [`quote`](https://docs.julialang.org/en/v1/base/base/#quote)
+    - `quote` creates multiple expression objects in a block without using the explicit Expr constructor.
+- `|>esc`
+    - [`|>`](https://docs.julialang.org/en/v1/base/base/#Base.:|%3E)
+        - Applies a function to the preceding argument. This allows for easy function chaining.
+    - [`esc`](https://docs.julialang.org/en/v1/base/base/#Base.esc)
+        - Only valid in the context of an `Expr` returned from a macro. Prevents the macro hygiene pass from turning embedded variables into gensym variables.
+- [`Expr`](https://docs.julialang.org/en/v1/base/base/#Core.Expr)
+    - Just think `Expr` as an object containing parsed julia code.
+    - A type representing compound expressions in parsed julia code (ASTs). Each expression consists of a `head Symbol` identifying which kind of expression it is (e.g. a call, for loop, conditional statement, etc.), and subexpressions (e.g. the arguments of a call). The subexpressions are stored in a `Vector{Any}` field called `args`.
